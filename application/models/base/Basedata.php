@@ -40,6 +40,11 @@ class Basedata extends CI_Model {
         $this->db->query("DELETE FROM nasabah WHERE nasabah_id='$id'");
         return 1;
     }
-    
+    public function getDebtM($id){
+        $query=$this->db->query("SELECT SUM(amount) AS total FROM pinjaman
+        WHERE nasabah_id='$id'
+        AND status='1'");
+        return $query->result();
+    }
     
 }

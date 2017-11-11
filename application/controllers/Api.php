@@ -20,9 +20,29 @@ class Api extends CI_Controller {
         $id='all';
         $data=$this->basedata->getNasabah($id);
         if(sizeof($data)>0){
-            echo $this->success($data);
+            //$dataArray=array();
+            foreach($data as $d){
+                $dataArray[]=array(
+                    'nasabah_id'=>$d->nasabah_id,
+                    'nasabah_name'=>$d->nasabah_name,
+                    'phone'=>$d->phone,
+                    'alamat'=>$d->alamat,
+                    'email'=>$d->email,
+                    'utang'=>$this->getDebt($d->nasabah_id),                    
+                    'user_id'=>$d->user_id
+                    );
+            }
+            echo $this->success($dataArray);
         }else{
             echo $this->failure();
+        }
+    }
+    public function getDebt($id){
+        $data=$this->basedata->getDebtM($id);
+        if($data[0]->total == null){
+            return "0";
+        }else{
+            return $data[0]->total;
         }
     }
     public function setnasabah(){
