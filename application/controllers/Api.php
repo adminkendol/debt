@@ -28,7 +28,7 @@ class Api extends CI_Controller {
                     'phone'=>$d->phone,
                     'alamat'=>$d->alamat,
                     'email'=>$d->email,
-                    'utang'=>$this->getDebt($d->nasabah_id),                    
+                    'utang'=>'Rp'.$this->getDebt($d->nasabah_id),                    
                     'user_id'=>$d->user_id
                     );
             }
@@ -42,7 +42,7 @@ class Api extends CI_Controller {
         if($data[0]->total == null){
             return "0";
         }else{
-            return $data[0]->total;
+            return number_format($data[0]->total,2,',','.');
         }
     }
     public function setnasabah(){
